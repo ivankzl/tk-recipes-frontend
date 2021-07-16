@@ -11,7 +11,7 @@ const Wrapper = styled.section`
   background: papayawhip;
 `;
 
-class RecipeList extends Component {
+class List extends Component {
   render() {
     return (
       <Wrapper>
@@ -23,4 +23,4 @@ class RecipeList extends Component {
   }
 }
 
-export default RecipeList;
+export default List;

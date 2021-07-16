@@ -1,14 +1,38 @@
-import React, { Component } from 'react';
-import RecipeItem from './components/Recipe/Item/RecipeItem'
-import './App.css';
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <RecipeItem />
-      </div>
-    );
-  }
-}
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-export default App;
+
+import ScreensHome from './screens/Home';
+import AppHeader from './components/AppHeader/AppHeader';
+import ScreensRecipeList from './screens/Recipe/List';
+import ScreensRecipeForm from './screens/Recipe/Form';
+
+export default function App() {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+        </ul>
+
+        <hr />
+
+        <Switch>
+          <Route exact path="/">
+            <ScreensHome />
+          </Route>
+          {/* <Route path="/about">
+            <About />
+          </Route> */}
+        </Switch>
+      </div>
+    </Router>
+  );
+}
