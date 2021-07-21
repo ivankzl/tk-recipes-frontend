@@ -22,6 +22,7 @@ function List({
 }: Props): ReactElement {
   return (
     <Wrapper>
+    <h2>All recipes</h2>
      { recipes.length ? (
         recipes.map(recipe => (
           <Item key={recipe.id} recipe={recipe}></Item>

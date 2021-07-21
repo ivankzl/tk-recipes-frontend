@@ -16,7 +16,7 @@ import ScreensAbout from './screens/About';
 import styled from 'styled-components';
 
 const MainContainer = styled.div`
-  margin-top:4rem;
+  margin-top:2rem;
   padding: 8px;
 `;
 

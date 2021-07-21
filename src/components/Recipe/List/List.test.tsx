@@ -1,10 +1,6 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import RecipeList from './List'
-import { RenderAndHistory } from 'utils/test/types'
-import { Recipe } from '../../../data/recipes/types'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 
 const recipes = [
   {
@@ -21,27 +17,13 @@ const recipes = [
   },
 ]
 
-interface Props {
-  recipes: Recipe[];
-}
+test('<RecipeList> with recipes', async () => {
+  render(<RecipeList recipes={recipes} />)
+  expect(await screen.findByText("All recipes")).toBeInTheDocument();
+  expect(await screen.findByText("Creamy lemon risotto")).toBeInTheDocument();
+});
 
-function renderRecipeList(props?: Props): RenderAndHistory {
-  const history = createMemoryHistory()
-  const utils = render(
-    <Router history={history}>
-      <RecipeList {...props} />
-    </Router>
-  )
-
-  return { ...utils, history }
-}
-
-describe('<RecipeList>', () => {
-  it('should render a valid recipe without crashing', async () => {
-    renderRecipeList({ recipes })
-  })
-
-  it('should render an undefined recipe list without crashing', async () => {
-    renderRecipeList()
-  })
-})
+test('<RecipeList> without recipes', async () => {
+  render(<RecipeList />)
+  expect(await screen.findByText("No recipes.")).toBeInTheDocument();
+});
