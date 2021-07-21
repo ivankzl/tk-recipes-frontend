@@ -15,11 +15,11 @@ function ScreensRecipeList(): ReactElement {
   let q = ''
   if (location.search) {
     const params = qs.parse(location.search)
-    if (params.q && typeof params.q === 'string') {
-      q = params.q
+    if (params['?q'] && typeof params['?q'] === 'string') {
+      q = params['?q']
     }
   }
-
+  
   const recipes = useAsync(() => getRecipes(q), [q])
 
   return (
