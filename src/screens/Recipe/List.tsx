@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import RecipeList from '../../components/Recipe/List/List';
 import { getRecipes } from '../../data/recipes/api'
+import { Button } from './styled'
 
 // @ts-ignore
 import qs from 'qs';
@@ -31,9 +32,11 @@ function ScreensRecipeList(): ReactElement {
       ) : (
         <RecipeList recipes={recipes.value} />
       )}
-      {/* <Button tag={Link} to={`/recipes/new`} className="mt-4">
-        New Recipe
-      </Button> */}
+      <Link to={'/recipes/new'}>
+          <Button type="Button">
+                Create a Recipe
+          </Button>
+      </Link>
     </div>
   );
 }

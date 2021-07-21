@@ -3,9 +3,15 @@ import { request } from '../../utils/api'
 import { Recipe } from './types'
 
 
-export function getRecipes(q: string): Promise<Recipe[]> {
+function getRecipes(q: string): Promise<Recipe[]> {
   if (q) {
     return request(`/recipes/?name=${q}`)
   }
   return request('/recipes/')
 }
+
+function getRecipe(id: number): Promise<Recipe> {
+  return request(`/recipes/?name=${id}`)
+}
+
+export { getRecipes, getRecipe }

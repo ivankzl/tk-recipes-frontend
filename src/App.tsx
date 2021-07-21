@@ -11,6 +11,7 @@ import ScreensHome from './screens/Home';
 import AppHeader from './components/AppHeader/AppHeader';
 import ScreensRecipeList from './screens/Recipe/List';
 import ScreensRecipeForm from './screens/Recipe/Form';
+import ScreensRecipeDetail from './screens/Recipe/Detail';
 import ScreensAbout from './screens/About';
 // @ts-ignore
 import styled from 'styled-components';
@@ -33,8 +34,8 @@ function App() {
             <ScreensRecipeList />
           </Route>
           <Route exact path="/recipes/:id">
-            <ScreensRecipeList />
-            </Route>
+            <ScreensRecipeDetail />
+          </Route>
           <Route exact path="/form">
             <ScreensRecipeForm />
           </Route>

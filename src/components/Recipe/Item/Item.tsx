@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react'
 
+// @ts-ignore
+import { Link } from 'react-router-dom';
+
 import { Recipe } from '../../../data/recipes/types';
 
 import {
@@ -28,7 +31,9 @@ function Item({ recipe }: Props): ReactElement {
       </RecipeItemContent>
       
       <ActionButtons>
-        <FontAwesomeIcon icon={faEye} />
+        <Link to={`/recipes/${recipe.id}`}>
+          <FontAwesomeIcon icon={faEye} />
+        </Link>
       </ActionButtons>
     </RecipeItem>
   );
