@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+
+import RecipeSearch from '../RecipeSearch'
 
 // import RecipeSearch from 'components/RecipeSearch'
 
@@ -10,7 +12,7 @@ const Nav = styled.div`
   background-color: #333;
   position: fixed; 
   top: 0;
-  width: 99%;
+  width: 100%;
   a {
     float: left;
     display: block;
@@ -27,13 +29,23 @@ const Nav = styled.div`
     background-color: #292929;
     color: white;
   }
+  input {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
 `;
  
 class AppHeader extends Component {
   render() {
     return (
       <Nav>
-        <a className="active" href="#home">Ivan's Recipes</a>
+        <NavLink exact activeClassName='active' to='/'>Ivan's Recipes</NavLink>
+        <NavLink exact activeClassName='active' to='/about'>About</NavLink>
+        <RecipeSearch />
       </Nav>
     )
   }

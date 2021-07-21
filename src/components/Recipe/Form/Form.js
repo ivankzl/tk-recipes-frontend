@@ -1,49 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import useInputState from './useInputState'
+
 import { Title, Wrapper } from './styled'
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { title: '', description: '' };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+function Form() {
+  const[name, updateName, resetName] = useInputState('');
+  const[description, updateDescription, resetDescription] = useInputState('');
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log("Will create: ", name)
+    console.log("Will create: ", description)
+    resetName();
+    resetDescription();
   }
-  handleChange(event){
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-  handleSubmit(event){
-    event.preventDefault();
-    console.log("submit");
-    console.log('title: ', this.state.title);
-    console.log('description: ', this.state.description);
-    this.setState({ title: '', description: ''});
-  }
-  render() {
-    return (
-      <div>
-        <h1>Create a new Recipe</h1>
-        <label htmlFor='title'>Title</label>
+
+  return (
+    <div>
+      <h1>Create a new Recipe</h1>
+        <form onSubmit={ handleSubmit }>
+        <label htmlFor='name'>Name</label>
         <input
           type='text'
-          name='title'
-          value={ this.state.title }
-          onChange={ this.handleChange }
+          name='name'
+          value={ name }
+          onChange={ updateName }
         >
         </input>
         <label htmlFor='description'>Description</label>
         <input
           type='text'
           name='description'
-          value={ this.state.description }
-          onChange={ this.handleChange }
+          value={ description }
+          onChange={ updateDescription }
         >
         </input>
-        <button onClick={ this.handleSubmit }>Submit</button>
-      </div>
-    );
-  }
+        <button >Submit</button>
+      </form>
+    </div>
+  );
 }
 
 export default Form;
