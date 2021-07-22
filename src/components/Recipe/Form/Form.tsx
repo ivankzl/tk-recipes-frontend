@@ -18,17 +18,35 @@ interface Props {
 function Form(): ReactElement {
   const[name, updateName, resetName] = useInputState('');
   const[description, updateDescription, resetDescription] = useInputState('');
+  const [inputFields, setInputFields] = useState([{ name: '' }]);
+
   const history = useHistory();
 
+  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const values = [...inputFields];
+    values[index].name = event.target.value;
+
+    setInputFields(values);
+  };
+
+  const handleAddFields = () => {
+    const values = [...inputFields];
+    values.push({ name: '' });
+    setInputFields(values);
+  };
+
+  const handleRemoveFields = (index: number) => {
+    const values = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
+  };
+
   const handleSubmit = async (evt: React.FormEvent) => {
-    console.log("handlesubmit")
     evt.preventDefault();
-    console.log("Will create: ", name)
-    console.log("Will create: ", description)
     let payload: Recipe = {
       name: name,
       description: description,
-      ingredients: []
+      ingredients: inputFields
     }
     const response = await createRecipe(payload)
 
@@ -59,6 +77,41 @@ function Form(): ReactElement {
                 onChange={ updateDescription }
             />
           </FormGroup>
+          <FormGroup>
+            <Label htmlFor="ingredients">Ingredients</Label>
+            {inputFields.map((inputField, index) => (
+              <div key={`${inputField}~${index}`}>
+                  <Label htmlFor="name">Ingredient #{index+1}</Label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    name="name"
+                    value={inputField.name}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange(index, event)}
+                  />
+                <span>
+                  <button
+                    className="btn btn-link"
+                    type="button"
+                    onClick={() => handleRemoveFields(index)}
+                  >
+                    -
+                  </button>
+                  <button
+                    className="btn btn-link"
+                    type="button"
+                    onClick={() => handleAddFields()}
+                  >
+                    +
+                  </button>
+                </span>
+              </div>
+            ))}
+          </FormGroup>
+          <pre>
+            {JSON.stringify(inputFields, null, 2)}
+          </pre>
           <ButtonSubmit type="submit">
                   Submit
           </ButtonSubmit>
