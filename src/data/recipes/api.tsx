@@ -11,7 +11,7 @@ function getRecipes(q: string): Promise<Recipe[]> {
 }
 
 function getRecipe(id: number): Promise<Recipe> {
-  return request(`/recipes/?name=${id}`)
+  return request(`/recipes/${id}`)
 }
 
 export { getRecipes, getRecipe }

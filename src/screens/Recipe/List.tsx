@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import RecipeList from '../../components/Recipe/List/List';
 import { getRecipes } from '../../data/recipes/api'
-import { Button } from './styled'
+import { Button } from '../../styled'
 
 // @ts-ignore
 import qs from 'qs';
