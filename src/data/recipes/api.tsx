@@ -14,4 +14,16 @@ function getRecipe(id: number): Promise<Recipe> {
   return request(`/recipes/${id}`)
 }
 
-export { getRecipes, getRecipe }
+function createRecipe(data: Recipe): Promise<Recipe> {
+  return request(`/recipes/`, { method: 'POST', body: JSON.stringify(data) })
+}
+
+function deleteRecipe(id: number): Promise<Recipe> {
+  return request(`/recipes/${id}`, { method: 'DELETE'})
+}
+
+ function updateRecipe(id: number, data: Recipe): Promise<Recipe> {
+  return request(`/recipes/${id}/`, {method: 'PATCH', body: JSON.stringify(data) })
+}
+
+export { getRecipes, getRecipe, createRecipe, deleteRecipe, updateRecipe }
