@@ -11,26 +11,34 @@ const Button = styled.button`
   border: 2px solid #4757b1;
   border-radius: 3px;
   display: inline-block;
+  cursor: pointer;
 `;
 
 const ButtonEdit = styled(Button)`
   border: 2px solid #273064;
   color: #273064;
-  cursor: pointer;
   :hover{
     color: white;
     background-color: #4a5594;
   }
 `;
 
+const ButtonSubmit = styled(Button)`
+  border: 2px solid #255c33;
+  color: #255c33;
+  :hover{
+    color: white;
+    background-color: #255c33;
+  }
+`;
+
 const ButtonDelete = styled(Button)`
   color: #962323;
   border: 2px solid #962323;
-  cursor: pointer;
   :hover{
     color: white;
     background-color: #962323;
   }
 `;
 
-export { Button, ButtonEdit, ButtonDelete }
+export { Button, ButtonSubmit, ButtonEdit, ButtonDelete }

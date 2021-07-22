@@ -10,7 +10,7 @@ import {
 import ScreensHome from './screens/Home';
 import AppHeader from './components/AppHeader/AppHeader';
 import ScreensRecipeList from './screens/Recipe/List';
-import ScreensRecipeForm from './screens/Recipe/Form';
+import ScreensRecipeCreate from './screens/Recipe/Create';
 import ScreensRecipeDetail from './screens/Recipe/Detail';
 import ScreensAbout from './screens/About';
 // @ts-ignore
@@ -33,11 +33,14 @@ function App() {
           <Route exact path="/recipes">
             <ScreensRecipeList />
           </Route>
+          <Route exact path="/recipes/new">
+            <ScreensRecipeCreate />
+          </Route>
           <Route exact path="/recipes/:id">
             <ScreensRecipeDetail />
           </Route>
-          <Route exact path="/form">
-            <ScreensRecipeForm />
+          <Route exact path="/recipes/:id/edit">
+            <ScreensRecipeDetail />
           </Route>
           <Route exact path="/about">
             <ScreensAbout />
