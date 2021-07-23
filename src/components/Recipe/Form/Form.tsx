@@ -6,58 +6,85 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { createRecipe } from '../../../data/recipes/api';
 import { Button, ButtonSubmit } from '../../../styled'
-import { FormGroup, Label, Input } from './styled'
+import { FormGroup, Label, LabelIngredient, Input, ErrorContainer } from './styled'
 
 import { Recipe } from '../../../data/recipes/types'
+import RecipeSearch from '../../RecipeSearch';
 
 interface Props {
   recipe?: Recipe;
 }
 
-
 function Form(): ReactElement {
   const[name, updateName, resetName] = useInputState('');
   const[description, updateDescription, resetDescription] = useInputState('');
-  const [inputFields, setInputFields] = useState([{ name: '' }]);
+  const [ingredients, setIngredients] = useState([{ name: '' }]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const history = useHistory();
 
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const values = [...inputFields];
+    const values = [...ingredients];
     values[index].name = event.target.value;
 
-    setInputFields(values);
+    setIngredients(values);
+  };
+
+  const handleValidation = () => {
+    setErrors([]);
+    if (!name){
+      setErrors(errors => [...errors, 'Name cannot be empty']);
+    }
+    if (!description){
+      setErrors(errors => [...errors, 'Description cannot be empty']);
+    }
+    if (!ingredients || ingredients.some(i => !i.name)){
+      setErrors(errors => [...errors, 'Ingredients must be at leas 1 and all must contain name']);
+    }
   };
 
   const handleAddFields = () => {
-    const values = [...inputFields];
+    const values = [...ingredients];
     values.push({ name: '' });
-    setInputFields(values);
+    setIngredients(values);
   };
 
   const handleRemoveFields = (index: number) => {
-    const values = [...inputFields];
+    const values = [...ingredients];
     values.splice(index, 1);
-    setInputFields(values);
+    setIngredients(values);
   };
 
   const handleSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
+    handleValidation();
     let payload: Recipe = {
       name: name,
       description: description,
-      ingredients: inputFields
+      ingredients: ingredients
     }
-    const response = await createRecipe(payload)
+    if (errors.length == 0){
+      const response = await createRecipe(payload)
 
-    resetName();
-    resetDescription();
-    history.push('/recipes')
+      resetName();
+      resetDescription();
+      history.push('/recipes')
+    }
   }
 
   return (
     <div>
       <h1>Create a new Recipe</h1>
+        { errors.length > 0 && 
+          <ErrorContainer>
+            Please correct the following errors:
+            <ul>
+              {errors.map(function(e, k) {
+                return(<li key={k}>{e}</li>)
+              })}
+            </ul>
+          </ErrorContainer> 
+        }
         <form onSubmit={ handleSubmit }>
           <FormGroup>
             <Label htmlFor="name">Name</Label>
@@ -79,9 +106,9 @@ function Form(): ReactElement {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="ingredients">Ingredients</Label>
-            {inputFields.map((inputField, index) => (
+            {ingredients.map((inputField, index) => (
               <div key={`${inputField}~${index}`}>
-                  <Label htmlFor="name">Ingredient #{index+1}</Label>
+                  <LabelIngredient htmlFor="name">Ingredient #{index+1}</LabelIngredient>
                   <Input
                     type="text"
                     className="form-control"
@@ -109,9 +136,6 @@ function Form(): ReactElement {
               </div>
             ))}
           </FormGroup>
-          <pre>
-            {JSON.stringify(inputFields, null, 2)}
-          </pre>
           <ButtonSubmit type="submit">
                   Submit
           </ButtonSubmit>

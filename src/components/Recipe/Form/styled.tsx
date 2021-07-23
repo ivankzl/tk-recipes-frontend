@@ -15,10 +15,16 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
 	margin-bottom: 0.5em;
-	color: #000000;
+	color: #181a3b;
   display: block;
+	font-weight: bold;
 `;
 
+const LabelIngredient = styled.label`
+	margin-bottom: 0.5em;
+	color: #1d1d1d;
+  display: block;
+`;
 
 const Input = styled.input`
 	padding: 0.5em;
@@ -30,5 +36,15 @@ const Input = styled.input`
 	margin-bottom: 0.5em;
 `;
 
+const ErrorContainer = styled.div`
+	padding: 0.5em;
+	color: #000000;
+	background: #fccabb;
+	border: 1px red;
+	border-radius: 3px;
+	width: 50%;
+	margin-bottom: 1em;
+`;
 
-export { Wrapper, FormGroup, Label, Input };
+
+export { Wrapper, FormGroup, Label, LabelIngredient, Input, ErrorContainer };

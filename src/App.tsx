@@ -12,6 +12,7 @@ import AppHeader from './components/AppHeader/AppHeader';
 import ScreensRecipeList from './screens/Recipe/List';
 import ScreensRecipeCreate from './screens/Recipe/Create';
 import ScreensRecipeDetail from './screens/Recipe/Detail';
+import ScreensRecipeEdit from './screens/Recipe/Edit';
 import ScreensAbout from './screens/About';
 // @ts-ignore
 import styled from 'styled-components';
@@ -40,7 +41,7 @@ function App() {
             <ScreensRecipeDetail />
           </Route>
           <Route exact path="/recipes/:id/edit">
-            <ScreensRecipeDetail />
+            <ScreensRecipeEdit />
           </Route>
           <Route exact path="/about">
             <ScreensAbout />

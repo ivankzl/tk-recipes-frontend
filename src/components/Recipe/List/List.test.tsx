@@ -20,6 +20,9 @@ const recipes = [
 test('<RecipeList> with recipes', async () => {
   render(<RecipeList recipes={recipes} />)
   expect(await screen.findByText("All recipes")).toBeInTheDocument();
+  expect(await screen.findByText("Chocolate cookies")).toBeInTheDocument();
+  expect(await screen.findByText("The best fudgy cookies you will ever try")).toBeInTheDocument();
+  expect(await screen.findByText("Risotto")).toBeInTheDocument();
   expect(await screen.findByText("Creamy lemon risotto")).toBeInTheDocument();
 });
 
