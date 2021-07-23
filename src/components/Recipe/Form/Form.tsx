@@ -4,7 +4,7 @@ import useInputState from './useInputState'
 // @ts-ignore
 import { Link, useHistory } from 'react-router-dom'
 
-import { createRecipe } from '../../../data/recipes/api';
+import { createRecipe, updateRecipe } from '../../../data/recipes/api';
 import { Button, ButtonSubmit } from '../../../styled'
 import { FormGroup, Label, LabelIngredient, Input, ErrorContainer } from './styled'
 
@@ -12,13 +12,15 @@ import { Recipe } from '../../../data/recipes/types'
 import RecipeSearch from '../../RecipeSearch';
 
 interface Props {
-  recipe?: Recipe;
+  initialRecipe?: Recipe;
 }
 
-function Form(): ReactElement {
-  const[name, updateName, resetName] = useInputState('');
-  const[description, updateDescription, resetDescription] = useInputState('');
-  const [ingredients, setIngredients] = useState([{ name: '' }]);
+function Form({
+  initialRecipe = { name: '', description: '', ingredients: [{ name: '' }] },
+}: Props): ReactElement {
+  const[name, updateName, resetName] = useInputState(initialRecipe?.name || '');
+  const[description, updateDescription, resetDescription] = useInputState(initialRecipe?.description || '');
+  const [ingredients, setIngredients] = useState(initialRecipe?.ingredients || [{ name: '' }]);
   const [errors, setErrors] = useState<string[]>([]);
 
   const history = useHistory();
@@ -63,13 +65,12 @@ function Form(): ReactElement {
       description: description,
       ingredients: ingredients
     }
-    if (errors.length == 0){
-      const response = await createRecipe(payload)
-
-      resetName();
-      resetDescription();
-      history.push('/recipes')
+    if (errors.length > 0){
+      return;
     }
+    
+    initialRecipe ? await createRecipe(payload): createRecipe(payload);
+    history.push('/recipes')
   }
 
   return (
