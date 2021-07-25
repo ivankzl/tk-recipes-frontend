@@ -4,7 +4,7 @@ import { RenderAndHistory } from 'utils/test/types'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
 import { Router } from 'react-router-dom'
 
-import RecipeDetail from './Detail'
+import RecipeItem from './Item'
 import { Recipe } from '../../../data/recipes/types'
 
 const recipe = {
@@ -18,25 +18,30 @@ interface Props {
   recipe: Recipe;
 }
 
-describe('<RecipeDetail>', () => {
+function renderRecipeItem(props: Props): RenderAndHistory {
+  const history = createMemoryHistory()
+  const utils = render(
+    <Router history={history}>
+      <RecipeItem {...props} />
+    </Router>
+  )
+
+  return { ...utils, history }
+}
+
+describe('<RecipeItem>', () => {
   it('should render a recipe', async () => {
-    <RecipeDetail recipe={ recipe } />
-  });
+    renderRecipeItem({ recipe });
+  })
 
   it('should render a recipe name', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
+    const { getByText } = renderRecipeItem({ recipe });
     expect(getByText('Chocolate cookies')).toBeInTheDocument();
-  });
+  })
 
   it('should render a recipe description', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
+    const { getByText } = renderRecipeItem({ recipe });
+    await waitFor(() => getByText('Chocolate cookies'))
     expect(getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
-  });
-
-  it('should render a recipe name', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
-    expect(getByText('Butter')).toBeInTheDocument();
-    expect(getByText('Chocolate')).toBeInTheDocument();
-    expect(getByText('Flour')).toBeInTheDocument();
-  });
+  })
 })
