@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import useInputState from './useInputState'
+import useInputState from "./useInputState";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 // @ts-ignore

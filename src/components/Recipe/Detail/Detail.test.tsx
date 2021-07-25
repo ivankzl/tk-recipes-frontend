@@ -2,7 +2,6 @@ import React from 'react'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import { RenderAndHistory } from 'utils/test/types'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
-import { Router } from 'react-router-dom'
 
 import RecipeDetail from './Detail'
 import { Recipe } from '../../../data/recipes/types'
