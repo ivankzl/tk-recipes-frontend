@@ -2,7 +2,7 @@ import React from 'react'
 import { Router, Route } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
 import { render, act, waitFor } from '@testing-library/react'
-import { getRecipe, updateRecipe } from '../../data/recipes/api'
+import { getRecipe, deleteRecipe } from '../../data/recipes/api'
 import { RenderAndHistory } from 'utils/test/types'
 import userEvent from '@testing-library/user-event'
 
@@ -47,5 +47,25 @@ describe('<ScreensRecipeDetail>', () => {
       expect(getByText('Salt')).toBeInTheDocument()
       expect(getByText('Tomato')).toBeInTheDocument()
     });
+  });
+
+  it('should show delete a recipe when Destroy is clicked', async () => {
+    // @ts-ignore
+    getRecipe.mockResolvedValue({
+      id: 1,
+      name: 'Gnocci',
+      description: 'Creamy gnocci with tomato sauce',
+      ingredients: [{ name: 'Potato' }, { name: 'Salt' }, { name: 'Tomato' }],
+    })
+
+    const { getByText } = renderScreensRecipeDetail({
+      initialEntries: ['/recipes/1']
+    })
+    window.confirm = jest.fn(() => true)
+    
+    await waitFor(() => getByText('Gnocci'))
+    await userEvent.click(getByText('Destroy'))
+    expect(window.confirm).toBeCalledWith('Are you sure you wish to delete this recipe?');
+    expect(deleteRecipe).toHaveBeenCalledTimes(1)
   });
 });
