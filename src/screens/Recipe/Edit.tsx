@@ -9,7 +9,6 @@ import RecipeForm from '../../components/Recipe/Form/Form'
 export default function ScreensRecipeEdit(): ReactElement {
   const params = useParams();
   const recipe = useAsync(() => getRecipe(params.id))
-
   return (
     <div>
       {recipe.error ? (
