@@ -1,9 +1,8 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Switch,
   Route,
-  Link
   // @ts-ignore
 } from "react-router-dom";
 

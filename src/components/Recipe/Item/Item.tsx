@@ -7,8 +7,6 @@ import { Recipe } from '../../../data/recipes/types';
 
 import {
   RecipeItem, 
-  Title,
-  Wrapper,
   RecipeItemContent,
   RecipeItemName,
   RecipeItemDescription,

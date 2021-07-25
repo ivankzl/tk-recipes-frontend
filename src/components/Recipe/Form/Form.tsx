@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState } from 'react';
 import useInputState from './useInputState'
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -7,28 +7,28 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { createRecipe, updateRecipe } from '../../../data/recipes/api';
 import { Button, ButtonSubmit } from '../../../styled'
-import { FormGroup, Label, LabelIngredient, Input, ErrorContainer, ErrorMessage } from './styled'
+import { FormGroup, Label, LabelIngredient, Input, ErrorMessage } from './styled'
 
 import { Recipe } from '../../../data/recipes/types'
-import RecipeSearch from '../../RecipeSearch';
 
 interface Props {
   initialRecipe?: Recipe;
   initialId?: number;
 }
 
-interface RecipeForm {
+interface RecipeFormValues {
   name: string;
   description: string;
+  ingredients: string[];
 }
 
 function Form({
   initialRecipe = { name: '', description: '', ingredients: [{ name: '' }] },
   initialId = 0
 }: Props): ReactElement {
-  const { register, handleSubmit, formState: { errors } } = useForm<RecipeForm>();
-  const[name, updateName, resetName] = useInputState(initialRecipe?.name || '');
-  const[description, updateDescription, resetDescription] = useInputState(initialRecipe?.description || '');
+  const { register, handleSubmit, formState: { errors } } = useForm<RecipeFormValues>();
+  const[name, updateName] = useInputState(initialRecipe?.name || '');
+  const[description, updateDescription] = useInputState(initialRecipe?.description || '');
   const [ingredients, setIngredients] = useState(initialRecipe?.ingredients || [{ name: '' }]);
 
   const history = useHistory();
@@ -40,7 +40,7 @@ function Form({
     setIngredients(values);
   };
 
-  const onSubmit: SubmitHandler<RecipeForm> = async (data) => {
+  const onSubmit: SubmitHandler<RecipeFormValues> = async (data) => {
     
     let payload: Recipe = {
       name: name,
@@ -100,14 +100,15 @@ function Form({
                   <LabelIngredient htmlFor="name">Ingredient #{index+1}</LabelIngredient>
                   <Input
                     type="text"
-                    id={`ingredient_${index+1}`}
-                    name={`ingredient_${index+1}`}
+                    id={`ingredients[${index}]`}
+                    {...register(`ingredients.${index}`, { required: true, maxLength: 200 })}
                     placeholder={`Ingredient #${index+1}`}
                     data-testid={`recipe-ingredient-${index+1}-input`}
                     value={inputField.name}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange(index, event)}
                   />
                 <span>
+                <ErrorMessage>{errors.ingredients?.length && errors.ingredients[index] && <span>This field is required and max length is 200</span>}</ErrorMessage>
                   <button
                     type="button"
                     onClick={() => handleRemoveFields(index)}
