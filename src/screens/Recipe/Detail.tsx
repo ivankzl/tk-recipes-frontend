@@ -1,14 +1,11 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { useAsync } from 'react-use';
 // @ts-ignore
 import { Link, useParams, useHistory } from 'react-router-dom';
 
-import { Recipe } from '../../data/recipes/types';
-
-// @ts-ignore
-import qs from 'qs';
 import { deleteRecipe, getRecipe } from '../../data/recipes/api';
 import RecipeDetail from '../../components/Recipe/Detail/Detail'
+
 import { ButtonEdit, ButtonDelete } from '../../styled'
 
 // @ts-ignore

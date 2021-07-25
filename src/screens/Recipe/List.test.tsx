@@ -4,7 +4,7 @@ import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
 import { render, act } from '@testing-library/react'
 import { getRecipes } from '../../data/recipes/api'
 import { RenderAndHistory } from 'utils/test/types'
-import ScreenRecipeList from './list'
+import ScreenRecipeList from './List'
 
 jest.mock('../../data/recipes/api');
 

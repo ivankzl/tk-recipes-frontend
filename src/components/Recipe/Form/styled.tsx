@@ -47,4 +47,10 @@ const ErrorContainer = styled.div`
 `;
 
 
-export { Wrapper, FormGroup, Label, LabelIngredient, Input, ErrorContainer };
+const ErrorMessage = styled.div`
+	padding: 0.5em;
+	color: red;
+`;
+
+
+export { Wrapper, FormGroup, Label, LabelIngredient, Input, ErrorContainer, ErrorMessage };

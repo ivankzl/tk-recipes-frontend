@@ -1,27 +1,35 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import useInputState from './useInputState'
+import { useForm, SubmitHandler } from "react-hook-form";
 
 // @ts-ignore
 import { Link, useHistory } from 'react-router-dom'
 
 import { createRecipe, updateRecipe } from '../../../data/recipes/api';
 import { Button, ButtonSubmit } from '../../../styled'
-import { FormGroup, Label, LabelIngredient, Input, ErrorContainer } from './styled'
+import { FormGroup, Label, LabelIngredient, Input, ErrorContainer, ErrorMessage } from './styled'
 
 import { Recipe } from '../../../data/recipes/types'
 import RecipeSearch from '../../RecipeSearch';
 
 interface Props {
   initialRecipe?: Recipe;
+  initialId?: number;
+}
+
+interface RecipeForm {
+  name: string;
+  description: string;
 }
 
 function Form({
   initialRecipe = { name: '', description: '', ingredients: [{ name: '' }] },
+  initialId = 0
 }: Props): ReactElement {
+  const { register, handleSubmit, formState: { errors } } = useForm<RecipeForm>();
   const[name, updateName, resetName] = useInputState(initialRecipe?.name || '');
   const[description, updateDescription, resetDescription] = useInputState(initialRecipe?.description || '');
   const [ingredients, setIngredients] = useState(initialRecipe?.ingredients || [{ name: '' }]);
-  const [errors, setErrors] = useState<string[]>([]);
 
   const history = useHistory();
 
@@ -32,17 +40,15 @@ function Form({
     setIngredients(values);
   };
 
-  const handleValidation = () => {
-    setErrors([]);
-    if (!name){
-      setErrors(errors => [...errors, 'Name cannot be empty']);
+  const onSubmit: SubmitHandler<RecipeForm> = async (data) => {
+    
+    let payload: Recipe = {
+      name: name,
+      description: description,
+      ingredients: ingredients
     }
-    if (!description){
-      setErrors(errors => [...errors, 'Description cannot be empty']);
-    }
-    if (!ingredients || ingredients.some(i => !i.name)){
-      setErrors(errors => [...errors, 'Ingredients must be at leas 1 and all must contain name']);
-    }
+    initialId ? await updateRecipe(initialId, payload): await createRecipe(payload);
+    history.push('/recipes');
   };
 
   const handleAddFields = () => {
@@ -57,54 +63,36 @@ function Form({
     setIngredients(values);
   };
 
-  const handleSubmit = async (evt: React.FormEvent) => {
-    evt.preventDefault();
-    handleValidation();
-    let payload: Recipe = {
-      name: name,
-      description: description,
-      ingredients: ingredients
-    }
-    if (errors.length > 0){
-      return;
-    }
-    
-    initialRecipe ? await createRecipe(payload): createRecipe(payload);
-    history.push('/recipes')
-  }
-
   return (
     <div>
       <h1>Create a new Recipe</h1>
-        { errors.length > 0 && 
-          <ErrorContainer>
-            Please correct the following errors:
-            <ul>
-              {errors.map(function(e, k) {
-                return(<li key={k}>{e}</li>)
-              })}
-            </ul>
-          </ErrorContainer> 
-        }
-        <form onSubmit={ handleSubmit }>
+      <form onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
             <Label htmlFor="name">Name</Label>
             <Input 
                 type='text'
+                {...register("name", { required: true, maxLength: 200 })}
                 name='name'
+                placeholder='Name'
+                data-testid="recipe-name-input"
                 value={ name }
                 onChange={ updateName }
             />
           </FormGroup>
+          <ErrorMessage>{errors.name && <span>This field is required and max length is 200</span>}</ErrorMessage>
           <FormGroup>
             <Label htmlFor="description">Description</Label>
             <Input 
                 type='text'
+                {...register("description", { required: true, maxLength: 200 })}
                 name='description'
+                placeholder='Description'
+                data-testid="recipe-description-input"
                 value={ description }
                 onChange={ updateDescription }
             />
           </FormGroup>
+          <ErrorMessage>{errors.description && <span>This field is required and max length is 200</span>}</ErrorMessage>
           <FormGroup>
             <Label htmlFor="ingredients">Ingredients</Label>
             {ingredients.map((inputField, index) => (
@@ -112,23 +100,23 @@ function Form({
                   <LabelIngredient htmlFor="name">Ingredient #{index+1}</LabelIngredient>
                   <Input
                     type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
+                    id={`ingredient_${index+1}`}
+                    name={`ingredient_${index+1}`}
+                    placeholder={`Ingredient #${index+1}`}
+                    data-testid={`recipe-ingredient-${index+1}-input`}
                     value={inputField.name}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange(index, event)}
                   />
                 <span>
                   <button
-                    className="btn btn-link"
                     type="button"
                     onClick={() => handleRemoveFields(index)}
                   >
                     -
                   </button>
                   <button
-                    className="btn btn-link"
                     type="button"
+                    data-testid={`recipe-add-ingredient-${index+1}-button`}
                     onClick={() => handleAddFields()}
                   >
                     +
