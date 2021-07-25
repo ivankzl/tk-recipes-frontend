@@ -1,3 +1,5 @@
+// This code was borrowed from TravelPerk web repo
+
 const TIME_TO_WAIT = 500
 
 const HTTP_TOO_MANY_REQUESTS = 429
