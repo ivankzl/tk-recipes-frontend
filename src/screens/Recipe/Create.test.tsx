@@ -28,67 +28,74 @@ describe('<ScreenRecipeCreate>', () => {
     const { getByTestId, getByText } = renderScreensRecipeCreate();
     // @ts-ignore
     createRecipe.mockResolvedValue();
-      const nameInput = getByTestId('recipe-name-input');
-      const descriptionInput = getByTestId('recipe-description-input');
-      const ingredientInput = getByTestId('recipe-ingredient-1-input');
-      
-      userEvent.type(nameInput, 'Pasta');
-      userEvent.type(descriptionInput, 'Delicious');
-      userEvent.type(ingredientInput, 'Flour');
     
-      expect(nameInput).toHaveValue('Pasta');
-      expect(descriptionInput).toHaveValue('Delicious');
-      expect(ingredientInput).toHaveValue('Flour');
-      
-      userEvent.click(getByText('Submit'));
-  
-      setTimeout(() => {
-        expect(createRecipe).toHaveBeenCalledWith({
-          'name': 'Pasta',
-          'description': 'Delicious',
-          'ingredients': [{ 'name': 'Flour' }],
-        });
-      }, 100);  
+    const nameInput = getByTestId('recipe-name-input');
+    const descriptionInput = getByTestId('recipe-description-input');
+    const ingredientInput = getByTestId('recipe-ingredient-1-input');
+
+    await act(async () => {
+      await userEvent.type(nameInput, 'Pasta', { delay: 1 });
+      await userEvent.type(descriptionInput, 'Delicious');
+      await userEvent.type(ingredientInput, 'Flour');
+      return userEvent.click(getByText('Submit'));
+    });
+
+    expect(createRecipe).toHaveBeenCalledWith({
+      'name': 'Pasta',
+      'description': 'Delicious',
+      'ingredients': [{ 'name': 'Flour' }],
+    });
   })
 
-  it('should create a recipe when submitted with 3 ingredients', async () => {
+  it('should create a recipe when submitted with 2 ingredients', async () => {
     const { getByTestId, getByText } = renderScreensRecipeCreate();
     // @ts-ignore
     createRecipe.mockResolvedValue(),
 
-    userEvent.type(getByTestId('recipe-name-input'), 'Gnocci');
-    userEvent.type(getByTestId('recipe-description-input'), 'Test');
-    userEvent.type(getByTestId('recipe-ingredient-1-input'), 'Flour');
-    userEvent.click(getByTestId('recipe-add-ingredient-1-button'));
-    userEvent.type(getByTestId('recipe-ingredient-2-input'), 'Eggs');
-    userEvent.click(getByTestId('recipe-add-ingredient-2-button'));
-    userEvent.type(getByTestId('recipe-ingredient-3-input'), 'Pepper');
-  
-    userEvent.click(getByText('Submit'));
-
-    setTimeout(() => {
-      expect(createRecipe).toHaveBeenCalledWith({
-        'name': 'Gnocci',
-        'description': 'Test',
-        'ingredients': [
-          { 'name': 'Flour' },
-          { 'name': 'Eggs' },
-          { 'name': 'Pepper' }
-        ],
-      });
-    }, 100); 
-  })
+    await act(async () => {
+      await userEvent.click(getByTestId('recipe-add-ingredient-1-button'));
+      await userEvent.type(getByTestId('recipe-name-input'), 'Gnocci', { delay: 1 });
+      await userEvent.type(getByTestId('recipe-description-input'), 'Test');
+      await userEvent.type(getByTestId('recipe-ingredient-1-input'), 'Flour');
+      await userEvent.type(getByTestId('recipe-ingredient-2-input'), 'Eggs');
+      return userEvent.click(getByText('Submit'));
+    });
+    
+    expect(createRecipe).toHaveBeenCalledWith({
+      'name': 'Gnocci',
+      'description': 'Test',
+      'ingredients': [
+        { 'name': 'Flour' },
+        { 'name': 'Eggs' }
+      ],
+    });
+  });
 
   it('should not create a recipe when empty name', async () => {
     const { getByTestId, getByText } = renderScreensRecipeCreate();
     // @ts-ignore
     createRecipe.mockResolvedValue();
   
-    act(() => {
-      userEvent.type(getByTestId('recipe-name-input'), '');
+    await act(async () => {
+      await userEvent.type(getByTestId('recipe-name-input'), '');
+      return userEvent.click(getByText('Submit'));
     });
-    userEvent.click(getByText('Submit'));
   
     expect(createRecipe).toHaveBeenCalledTimes(0);
-  })
-})
+  });
+
+  it('should not create a recipe when empty ingredient name', async () => {
+    const { getByTestId, getByText } = renderScreensRecipeCreate();
+    // @ts-ignore
+    createRecipe.mockResolvedValue(),
+
+    await act(async () => {
+      await userEvent.type(getByTestId('recipe-name-input'), 'Gnocci');
+      await userEvent.type(getByTestId('recipe-description-input'), 'Test');
+      await userEvent.click(getByTestId('recipe-add-ingredient-1-button'));
+      return userEvent.click(getByText('Submit'));
+    });
+  
+    expect(createRecipe).toHaveBeenCalledTimes(0);
+  });
+});
