@@ -30,7 +30,7 @@ describe('<ScreensRecipeEdit>', () => {
     // @ts-ignore
     getRecipe.mockResolvedValue({
       id: 1,
-      name: 'Gnocci',
+      name: 'Gnocchi',
       description: 'Creamy gnocci with tomato sauce',
       ingredients: [{ name: 'Potato' }, { name: 'Salt' }, { name: 'Tomato' }],
     })
