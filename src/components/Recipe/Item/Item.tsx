@@ -1,22 +1,22 @@
 import React, { ReactElement } from 'react'
 
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
-import { Recipe } from '../../../data/recipes/types';
+import { Recipe } from '../../../data/recipes/types'
 
 import {
-  RecipeItem, 
+  RecipeItem,
   RecipeItemContent,
   RecipeItemName,
   RecipeItemDescription,
-  ActionButtons
+  ActionButtons,
 } from './styled'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
-  recipe: Recipe;
+  recipe: Recipe
 }
 
 function Item({ recipe }: Props): ReactElement {
@@ -26,14 +26,14 @@ function Item({ recipe }: Props): ReactElement {
         <RecipeItemName>{recipe.name}</RecipeItemName>
         <RecipeItemDescription>{recipe.description}</RecipeItemDescription>
       </RecipeItemContent>
-      
+
       <ActionButtons>
         <Link to={`/recipes/${recipe.id}`}>
           <FontAwesomeIcon icon={faEye} />
         </Link>
       </ActionButtons>
     </RecipeItem>
-  );
+  )
 }
 
-export default Item;
+export default Item

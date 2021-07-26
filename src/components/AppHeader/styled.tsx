@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Nav = styled.div`
   overflow: hidden;
   background-color: #333;
-  position: fixed; 
+  position: fixed;
   top: 0;
   width: 100%;
   a {
@@ -22,6 +22,6 @@ const Nav = styled.div`
     margin-right: 16px;
     font-size: 17px;
   }
-`;
+`
 
 export { Nav }

@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement } from 'react'
 import { useAsync } from 'react-use'
 
 import { Link, useLocation } from 'react-router-dom'
 
-import RecipeList from '../../components/Recipe/List/List';
+import RecipeList from '../../components/Recipe/List/List'
 import { getRecipes } from '../../data/recipes/api'
 import { Button } from '../../styled'
 
 // @ts-ignore
-import qs from 'qs';
+import qs from 'qs'
 
 function ScreensRecipeList(): ReactElement {
   const location = useLocation()
@@ -19,7 +19,7 @@ function ScreensRecipeList(): ReactElement {
       q = params['?q']
     }
   }
-  
+
   const recipes = useAsync(() => getRecipes(q), [q])
 
   return (
@@ -32,12 +32,10 @@ function ScreensRecipeList(): ReactElement {
         <RecipeList recipes={recipes.value} />
       )}
       <Link to={'/recipes/new'}>
-          <Button>
-                Create a Recipe
-          </Button>
+        <Button>Create a Recipe</Button>
       </Link>
     </div>
-  );
+  )
 }
 
-export default ScreensRecipeList;
+export default ScreensRecipeList

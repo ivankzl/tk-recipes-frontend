@@ -14,28 +14,30 @@ const recipe = {
 }
 
 interface Props {
-  recipe: Recipe;
+  recipe: Recipe
 }
 
 describe('<RecipeDetail>', () => {
   it('should render a recipe', async () => {
-    <RecipeDetail recipe={ recipe } />
-  });
+    ;<RecipeDetail recipe={recipe} />
+  })
 
   it('should render a recipe name', async () => {
-    render(<RecipeDetail recipe={ recipe } />)
-    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument();
-  });
+    render(<RecipeDetail recipe={recipe} />)
+    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument()
+  })
 
   it('should render a recipe description', async () => {
-    render(<RecipeDetail recipe={ recipe } />)
-    expect(screen.getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
-  });
+    render(<RecipeDetail recipe={recipe} />)
+    expect(
+      screen.getByText('The best fudgy cookies you will ever try')
+    ).toBeInTheDocument()
+  })
 
   it('should render a recipe name', async () => {
-    render(<RecipeDetail recipe={ recipe } />)
-    expect(screen.getByText('Butter')).toBeInTheDocument();
-    expect(screen.getByText('Chocolate')).toBeInTheDocument();
-    expect(screen.getByText('Flour')).toBeInTheDocument();
-  });
+    render(<RecipeDetail recipe={recipe} />)
+    expect(screen.getByText('Butter')).toBeInTheDocument()
+    expect(screen.getByText('Chocolate')).toBeInTheDocument()
+    expect(screen.getByText('Flour')).toBeInTheDocument()
+  })
 })

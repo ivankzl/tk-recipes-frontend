@@ -18,12 +18,16 @@ const recipes = [
     id: 2,
     name: 'Risotto',
     description: 'Creamy lemon risotto',
-    ingredients: [{ name: 'Carnaroli Rice' }, { name: 'Chicken Broth' }, { name: 'Parmesano Cheese' }],
+    ingredients: [
+      { name: 'Carnaroli Rice' },
+      { name: 'Chicken Broth' },
+      { name: 'Parmesano Cheese' },
+    ],
   },
-];
+]
 
 interface Props {
-  recipes: Recipe[];
+  recipes: Recipe[]
 }
 
 function renderRecipeList(props?: Props): RenderAndHistory {
@@ -38,15 +42,17 @@ function renderRecipeList(props?: Props): RenderAndHistory {
 }
 
 test('<RecipeList> with recipes', async () => {
-  renderRecipeList({ recipes });
-  expect(await screen.findByText("All recipes")).toBeInTheDocument();
-  expect(await screen.findByText("Chocolate cookies")).toBeInTheDocument();
-  expect(await screen.findByText("The best fudgy cookies you will ever try")).toBeInTheDocument();
-  expect(await screen.findByText("Risotto")).toBeInTheDocument();
-  expect(await screen.findByText("Creamy lemon risotto")).toBeInTheDocument();
-});
+  renderRecipeList({ recipes })
+  expect(await screen.findByText('All recipes')).toBeInTheDocument()
+  expect(await screen.findByText('Chocolate cookies')).toBeInTheDocument()
+  expect(
+    await screen.findByText('The best fudgy cookies you will ever try')
+  ).toBeInTheDocument()
+  expect(await screen.findByText('Risotto')).toBeInTheDocument()
+  expect(await screen.findByText('Creamy lemon risotto')).toBeInTheDocument()
+})
 
 test('<RecipeList> without recipes', async () => {
-  renderRecipeList();
-  expect(await screen.findByText("No recipes.")).toBeInTheDocument();
-});
+  renderRecipeList()
+  expect(await screen.findByText('No recipes.')).toBeInTheDocument()
+})

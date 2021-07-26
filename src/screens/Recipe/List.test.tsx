@@ -6,7 +6,7 @@ import { getRecipes } from '../../data/recipes/api'
 import { RenderAndHistory } from 'utils/test/types'
 import ScreenRecipeList from './List'
 
-jest.mock('../../data/recipes/api');
+jest.mock('../../data/recipes/api')
 
 function renderScreenRecipeList(
   options?: MemoryHistoryBuildOptions

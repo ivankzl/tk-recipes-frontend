@@ -15,7 +15,7 @@ const recipe = {
 }
 
 interface Props {
-  recipe: Recipe;
+  recipe: Recipe
 }
 
 function renderRecipeItem(props: Props): RenderAndHistory {
@@ -31,17 +31,19 @@ function renderRecipeItem(props: Props): RenderAndHistory {
 
 describe('<RecipeItem>', () => {
   it('should render a recipe', async () => {
-    renderRecipeItem({ recipe });
+    renderRecipeItem({ recipe })
   })
 
   it('should render a recipe name', async () => {
-    renderRecipeItem({ recipe });
-    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument();
+    renderRecipeItem({ recipe })
+    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument()
   })
 
   it('should render a recipe description', async () => {
-    renderRecipeItem({ recipe });
+    renderRecipeItem({ recipe })
     await waitFor(() => screen.getByText('Chocolate cookies'))
-    expect(screen.getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
+    expect(
+      screen.getByText('The best fudgy cookies you will ever try')
+    ).toBeInTheDocument()
   })
 })

@@ -1,10 +1,10 @@
 export type Ingredient = {
-  name: string,
+  name: string
 }
 
 export type Recipe = {
-  id?: number,
-  name: string,
-  description: string,
-  ingredients: Ingredient[],
+  id?: number
+  name: string
+  description: string
+  ingredients: Ingredient[]
 }

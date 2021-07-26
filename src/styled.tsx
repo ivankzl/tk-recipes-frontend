@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 const Button = styled.button`
   display: inline-block;
   color: #4757b1;
@@ -11,24 +10,24 @@ const Button = styled.button`
   border-radius: 3px;
   display: inline-block;
   cursor: pointer;
-`;
+`
 
 const ButtonEdit = styled(Button)`
   border: 2px solid #273064;
   color: white;
   background-color: #4a5594;
-`;
+`
 
 const ButtonSubmit = styled(Button)`
   border: 2px solid #255c33;
   color: white;
   background-color: #255c33;
-`;
+`
 
 const ButtonDelete = styled(Button)`
   border: 2px solid #962323;
   color: white;
   background-color: #962323;
-`;
+`
 
 export { Button, ButtonSubmit, ButtonEdit, ButtonDelete }

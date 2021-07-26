@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event'
 
 import ScreensRecipeDetail from './Detail'
 
-jest.mock('../../data/recipes/api');
+jest.mock('../../data/recipes/api')
 
 function renderScreensRecipeDetail(
   options?: MemoryHistoryBuildOptions
@@ -16,9 +16,9 @@ function renderScreensRecipeDetail(
   const history = createMemoryHistory(options)
   const utils = render(
     <Router history={history}>
-        <Route path={history.location.pathname}>
-          <ScreensRecipeDetail/>
-        </Route>
+      <Route path={history.location.pathname}>
+        <ScreensRecipeDetail />
+      </Route>
     </Router>
   )
 
@@ -34,20 +34,22 @@ describe('<ScreensRecipeDetail>', () => {
       description: 'Creamy gnocci with tomato sauce',
       ingredients: [{ name: 'Potato' }, { name: 'Salt' }, { name: 'Tomato' }],
     })
-  
+
     await act(async () => {
       renderScreensRecipeDetail({
-        initialEntries: ['/recipes/1']
+        initialEntries: ['/recipes/1'],
       })
-  
+
       await waitFor(() => screen.getByText('Gnocci'))
-    
-      expect(screen.getByText('Creamy gnocci with tomato sauce')).toBeInTheDocument()
+
+      expect(
+        screen.getByText('Creamy gnocci with tomato sauce')
+      ).toBeInTheDocument()
       expect(screen.getByText('Potato')).toBeInTheDocument()
       expect(screen.getByText('Salt')).toBeInTheDocument()
       expect(screen.getByText('Tomato')).toBeInTheDocument()
-    });
-  });
+    })
+  })
 
   it('should show delete a recipe when Destroy is clicked', async () => {
     // @ts-ignore
@@ -59,13 +61,15 @@ describe('<ScreensRecipeDetail>', () => {
     })
 
     renderScreensRecipeDetail({
-      initialEntries: ['/recipes/1']
+      initialEntries: ['/recipes/1'],
     })
     window.confirm = jest.fn(() => true)
-    
+
     await waitFor(() => screen.getByText('Gnocci'))
     await userEvent.click(screen.getByText('Destroy'))
-    expect(window.confirm).toBeCalledWith('Are you sure you wish to delete this recipe?');
+    expect(window.confirm).toBeCalledWith(
+      'Are you sure you wish to delete this recipe?'
+    )
     expect(deleteRecipe).toHaveBeenCalledTimes(1)
-  });
-});
+  })
+})

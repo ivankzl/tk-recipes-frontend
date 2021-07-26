@@ -52,11 +52,11 @@ export const getEndpointWithParams = (
   if (!params) {
     return baseEndpoint
   }
-  const identityFn = val => val
+  const identityFn = (val) => val
   const encodeFn = noEncoding ? identityFn : encodeURIComponent
 
   return Object.keys(params)
-    .filter(k => (params ? params[k] != null : false))
+    .filter((k) => (params ? params[k] != null : false))
     .reduce((currentEndpoint, curParam, i) => {
       const delimiter = i === 0 ? '?' : '&'
 
@@ -89,7 +89,7 @@ export const request = (
   const finalOptions = Object.assign({}, { headers }, options)
 
   return fetch(url, finalOptions)
-    .then(response => {
+    .then((response) => {
       const { status } = response
       const isValid = status >= 200 && status <= 299
       const notFound = status === 404
@@ -116,8 +116,8 @@ export const request = (
               numberOfRetries || 10,
               retryAttempt + 1
             )
-              .then(res => resolve(res))
-              .catch(res => reject(res))
+              .then((res) => resolve(res))
+              .catch((res) => reject(res))
           }, TIME_TO_WAIT * retryAttempt)
         })
       }
@@ -129,10 +129,10 @@ export const request = (
         : response.json
         ? response
             .json()
-            .then(data => Promise.reject({ response: data, status }))
+            .then((data) => Promise.reject({ response: data, status }))
         : response
     })
-    .then(response => {
+    .then((response) => {
       if (SUCCESS_RESPONSE_CODES_NO_DATA.has(response.status)) {
         return Promise.resolve()
       }
