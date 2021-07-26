@@ -2,7 +2,6 @@ import React, { ReactElement, useState } from 'react';
 import useInputState from "./useInputState";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-// @ts-ignore
 import { Link, useHistory } from 'react-router-dom'
 
 import { createRecipe, updateRecipe } from '../../../data/recipes/api';
@@ -13,7 +12,7 @@ import { Recipe } from '../../../data/recipes/types'
 
 interface Props {
   initialRecipe?: Recipe;
-  initialId?: number;
+  initialId?: number|string;
 }
 
 interface RecipeFormValues {
@@ -130,7 +129,7 @@ function Form({
                   Submit
           </ButtonSubmit>
           <Link to={'/recipes'}>
-            <Button type="Button">
+            <Button>
                   Back
             </Button>
           </Link>

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-// @ts-ignore
 import { NavLink } from 'react-router-dom'
 
 import RecipeSearch from '../RecipeSearch'

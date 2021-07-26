@@ -1,14 +1,17 @@
 import React, { ReactElement } from 'react'
-// @ts-ignore
 import { useParams } from 'react-router-dom';
 import { useAsync } from 'react-use';
 
 import { getRecipe } from '../../data/recipes/api'
 import RecipeForm from '../../components/Recipe/Form/Form'
 
+type RecipeParams = {
+  id: string;
+};
+
 export default function ScreensRecipeEdit(): ReactElement {
-  const params = useParams();
-  const recipe = useAsync(() => getRecipe(params.id))
+  const { id } = useParams<RecipeParams>();
+  const recipe = useAsync(() => getRecipe(id))
   return (
     <div>
       {recipe.error ? (
@@ -16,7 +19,7 @@ export default function ScreensRecipeEdit(): ReactElement {
       ) : recipe.loading ? (
         'Loading recipe...'
       ) : (
-        <RecipeForm initialRecipe={recipe.value} initialId={params.id} />
+        <RecipeForm initialRecipe={recipe.value} initialId={id} />
       )}
     </div>
   )

@@ -3,7 +3,6 @@ import {
   BrowserRouter,
   Switch,
   Route,
-  // @ts-ignore
 } from "react-router-dom";
 
 import ScreensHome from './screens/Home';
@@ -13,7 +12,6 @@ import ScreensRecipeCreate from './screens/Recipe/Create';
 import ScreensRecipeDetail from './screens/Recipe/Detail';
 import ScreensRecipeEdit from './screens/Recipe/Edit';
 import ScreensAbout from './screens/About';
-// @ts-ignore
 import styled from 'styled-components';
 
 const MainContainer = styled.div`

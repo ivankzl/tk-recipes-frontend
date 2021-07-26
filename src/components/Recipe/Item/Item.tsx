@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react'
 
-// @ts-ignore
 import { Link } from 'react-router-dom';
 
 import { Recipe } from '../../../data/recipes/types';

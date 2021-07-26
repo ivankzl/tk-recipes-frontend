@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import Item from '../Item/Item';
 import { Recipe } from '../../../data/recipes/types';
 
-// @ts-ignore
 import { Wrapper } from './styled';
 
 interface Props {

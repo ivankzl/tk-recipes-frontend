@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { useAsync } from 'react-use';
-// @ts-ignore
 import { Link, useParams, useHistory } from 'react-router-dom';
 
 import { deleteRecipe, getRecipe } from '../../data/recipes/api';
@@ -8,19 +7,22 @@ import RecipeDetail from '../../components/Recipe/Detail/Detail'
 
 import { ButtonEdit, ButtonDelete } from '../../styled'
 
-// @ts-ignore
 import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
     text-decoration: none;
 `;
 
+type RecipeParams = {
+  id: string;
+};
+
 function ScreensRecipeDetail(): ReactElement {
-  const params = useParams()
-  const recipe = useAsync(() => getRecipe(params.id))
+  const { id } = useParams<RecipeParams>();
+  const recipe = useAsync(() => getRecipe(id))
   const history = useHistory()
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: number|string) => {
     await deleteRecipe(id)
     history.push('/recipes')
   };
@@ -34,14 +36,13 @@ function ScreensRecipeDetail(): ReactElement {
       ) : (
         <RecipeDetail recipe={recipe.value} />
       )}
-      <StyledLink to={`/recipes/${params.id}/edit`}>
-        <ButtonEdit type="Button">
+      <StyledLink to={`/recipes/${id}/edit`}>
+        <ButtonEdit type="button">
               Edit
         </ButtonEdit>
       </StyledLink>
       <ButtonDelete
-        type="Button"
-        onClick={() => { if (window.confirm('Are you sure you wish to delete this recipe?')) handleDelete(params.id) } } >
+        onClick={() => { if (window.confirm('Are you sure you wish to delete this recipe?')) handleDelete(id) } } >
             Destroy
       </ButtonDelete>
     </div>

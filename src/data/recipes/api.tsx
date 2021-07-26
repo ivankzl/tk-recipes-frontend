@@ -10,7 +10,7 @@ function getRecipes(q: string): Promise<Recipe[]> {
   return request('/recipes/')
 }
 
-function getRecipe(id: number): Promise<Recipe> {
+function getRecipe(id: number|string): Promise<Recipe> {
   return request(`/recipes/${id}`)
 }
 
@@ -18,11 +18,11 @@ function createRecipe(data: Recipe): Promise<Recipe> {
   return request(`/recipes/`, { method: 'POST', body: JSON.stringify(data) })
 }
 
-function deleteRecipe(id: number): Promise<Recipe> {
+function deleteRecipe(id: number|string): Promise<Recipe> {
   return request(`/recipes/${id}`, { method: 'DELETE'})
 }
 
- function updateRecipe(id: number, data: Recipe): Promise<Recipe> {
+ function updateRecipe(id: number|string, data: Recipe): Promise<Recipe> {
   return request(`/recipes/${id}/`, {method: 'PATCH', body: JSON.stringify(data) })
 }
 

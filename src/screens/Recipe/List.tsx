@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useAsync } from 'react-use'
 
-// @ts-ignore
 import { Link, useLocation } from 'react-router-dom'
 
 import RecipeList from '../../components/Recipe/List/List';
@@ -33,7 +32,7 @@ function ScreensRecipeList(): ReactElement {
         <RecipeList recipes={recipes.value} />
       )}
       <Link to={'/recipes/new'}>
-          <Button type="Button">
+          <Button>
                 Create a Recipe
           </Button>
       </Link>
