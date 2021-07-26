@@ -16,7 +16,7 @@ import styled from 'styled-components';
 
 const MainContainer = styled.div`
   margin-top:2rem;
-  padding: 8px;
+  padding: 1rem;
 `;
 
 function App() {

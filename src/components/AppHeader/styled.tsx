@@ -14,14 +14,6 @@ const Nav = styled.div`
     padding: 14px 16px;
     text-decoration: none;
   }
-  a:hover {
-    background: #ddd;
-    color: black;
-  }
-  a.active {
-    background-color: #292929;
-    color: white;
-  }
   input {
     float: right;
     padding: 6px;

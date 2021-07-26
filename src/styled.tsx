@@ -15,29 +15,20 @@ const Button = styled.button`
 
 const ButtonEdit = styled(Button)`
   border: 2px solid #273064;
-  color: #273064;
-  :hover{
-    color: white;
-    background-color: #4a5594;
-  }
+  color: white;
+  background-color: #4a5594;
 `;
 
 const ButtonSubmit = styled(Button)`
   border: 2px solid #255c33;
-  color: #255c33;
-  :hover{
-    color: white;
-    background-color: #255c33;
-  }
+  color: white;
+  background-color: #255c33;
 `;
 
 const ButtonDelete = styled(Button)`
-  color: #962323;
   border: 2px solid #962323;
-  :hover{
-    color: white;
-    background-color: #962323;
-  }
+  color: white;
+  background-color: #962323;
 `;
 
 export { Button, ButtonSubmit, ButtonEdit, ButtonDelete }
