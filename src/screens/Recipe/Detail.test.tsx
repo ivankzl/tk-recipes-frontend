@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
-import { render, act, waitFor } from '@testing-library/react'
+import { render, act, waitFor, screen } from '@testing-library/react'
 import { getRecipe, deleteRecipe } from '../../data/recipes/api'
 import { RenderAndHistory } from 'utils/test/types'
 import userEvent from '@testing-library/user-event'
@@ -36,16 +36,16 @@ describe('<ScreensRecipeDetail>', () => {
     })
   
     await act(async () => {
-      const { getByText } = renderScreensRecipeDetail({
+      renderScreensRecipeDetail({
         initialEntries: ['/recipes/1']
       })
   
-      await waitFor(() => getByText('Gnocci'))
+      await waitFor(() => screen.getByText('Gnocci'))
     
-      expect(getByText('Creamy gnocci with tomato sauce')).toBeInTheDocument()
-      expect(getByText('Potato')).toBeInTheDocument()
-      expect(getByText('Salt')).toBeInTheDocument()
-      expect(getByText('Tomato')).toBeInTheDocument()
+      expect(screen.getByText('Creamy gnocci with tomato sauce')).toBeInTheDocument()
+      expect(screen.getByText('Potato')).toBeInTheDocument()
+      expect(screen.getByText('Salt')).toBeInTheDocument()
+      expect(screen.getByText('Tomato')).toBeInTheDocument()
     });
   });
 
@@ -58,13 +58,13 @@ describe('<ScreensRecipeDetail>', () => {
       ingredients: [{ name: 'Potato' }, { name: 'Salt' }, { name: 'Tomato' }],
     })
 
-    const { getByText } = renderScreensRecipeDetail({
+    renderScreensRecipeDetail({
       initialEntries: ['/recipes/1']
     })
     window.confirm = jest.fn(() => true)
     
-    await waitFor(() => getByText('Gnocci'))
-    await userEvent.click(getByText('Destroy'))
+    await waitFor(() => screen.getByText('Gnocci'))
+    await userEvent.click(screen.getByText('Destroy'))
     expect(window.confirm).toBeCalledWith('Are you sure you wish to delete this recipe?');
     expect(deleteRecipe).toHaveBeenCalledTimes(1)
   });

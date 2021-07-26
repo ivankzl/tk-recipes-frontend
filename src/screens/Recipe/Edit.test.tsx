@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router, Route } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
-import { render, act, waitFor } from '@testing-library/react'
+import { render, act, waitFor, screen } from '@testing-library/react'
 import { getRecipe, updateRecipe } from '../../data/recipes/api'
 import { RenderAndHistory } from 'utils/test/types'
 import userEvent from '@testing-library/user-event'
@@ -38,15 +38,15 @@ describe('<ScreensRecipeEdit>', () => {
     updateRecipe.mockResolvedValue()
   
     await act(async () => {
-      const { getByPlaceholderText, getByTestId, getByText } = renderScreensRecipeEdit({
+      renderScreensRecipeEdit({
         initialEntries: ['/recipes/1/edit']
       })
       
-      await waitFor(() => getByTestId('recipe-name-input'));
-      await userEvent.type(getByTestId('recipe-name-input'), 'Pasta', { delay: 1 });
-      await userEvent.type(getByTestId('recipe-description-input'), 'Delicious');
-      await userEvent.type(getByTestId('recipe-ingredient-1-input'), 'Flour');
-      return userEvent.click(getByText('Submit'));
+      await waitFor(() => screen.getByTestId('recipe-name-input'));
+      await userEvent.type(screen.getByTestId('recipe-name-input'), 'Pasta', { delay: 1 });
+      await userEvent.type(screen.getByTestId('recipe-description-input'), 'Delicious');
+      await userEvent.type(screen.getByTestId('recipe-ingredient-1-input'), 'Flour');
+      return userEvent.click(screen.getByText('Submit'));
     });
   
     setTimeout( function(){
@@ -70,14 +70,14 @@ describe('<ScreensRecipeEdit>', () => {
     updateRecipe.mockResolvedValue()
   
     await act(async () => {
-      const { getByPlaceholderText, getByTestId, getByText } = renderScreensRecipeEdit({
+      renderScreensRecipeEdit({
         initialEntries: ['/recipes/1/edit']
       })
       
-      await waitFor(() => getByTestId('recipe-name-input'));
-      await userEvent.type(getByTestId('recipe-name-input'), '', { delay: 1 });
-      await userEvent.type(getByTestId('recipe-description-input'), 'Delicious');
-      return userEvent.click(getByText('Submit'));
+      await waitFor(() => screen.getByTestId('recipe-name-input'));
+      await userEvent.type(screen.getByTestId('recipe-name-input'), '', { delay: 1 });
+      await userEvent.type(screen.getByTestId('recipe-description-input'), 'Delicious');
+      return userEvent.click(screen.getByText('Submit'));
     });
   
     setTimeout( function(){

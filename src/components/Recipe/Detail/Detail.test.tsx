@@ -23,19 +23,19 @@ describe('<RecipeDetail>', () => {
   });
 
   it('should render a recipe name', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
-    expect(getByText('Chocolate cookies')).toBeInTheDocument();
+    render(<RecipeDetail recipe={ recipe } />)
+    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument();
   });
 
   it('should render a recipe description', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
-    expect(getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
+    render(<RecipeDetail recipe={ recipe } />)
+    expect(screen.getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
   });
 
   it('should render a recipe name', async () => {
-    const { getByText } = render(<RecipeDetail recipe={ recipe } />)
-    expect(getByText('Butter')).toBeInTheDocument();
-    expect(getByText('Chocolate')).toBeInTheDocument();
-    expect(getByText('Flour')).toBeInTheDocument();
+    render(<RecipeDetail recipe={ recipe } />)
+    expect(screen.getByText('Butter')).toBeInTheDocument();
+    expect(screen.getByText('Chocolate')).toBeInTheDocument();
+    expect(screen.getByText('Flour')).toBeInTheDocument();
   });
 })

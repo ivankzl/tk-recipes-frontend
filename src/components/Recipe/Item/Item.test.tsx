@@ -35,13 +35,13 @@ describe('<RecipeItem>', () => {
   })
 
   it('should render a recipe name', async () => {
-    const { getByText } = renderRecipeItem({ recipe });
-    expect(getByText('Chocolate cookies')).toBeInTheDocument();
+    renderRecipeItem({ recipe });
+    expect(screen.getByText('Chocolate cookies')).toBeInTheDocument();
   })
 
   it('should render a recipe description', async () => {
-    const { getByText } = renderRecipeItem({ recipe });
-    await waitFor(() => getByText('Chocolate cookies'))
-    expect(getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
+    renderRecipeItem({ recipe });
+    await waitFor(() => screen.getByText('Chocolate cookies'))
+    expect(screen.getByText('The best fudgy cookies you will ever try')).toBeInTheDocument();
   })
 })
